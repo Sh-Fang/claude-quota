@@ -157,11 +157,11 @@ function render(input) {
     const dayPct = Math.floor((todayCost * 100) / DAILY_LIMIT);
     const dayColor = pctColor(dayPct);
     parts.push(
-      `${GRAY}Cost${RESET} ${dayColor}$${todayCost.toFixed(2)}${GRAY}/$${DAILY_LIMIT}${RESET} ` +
+      `${GRAY}Daily${RESET} ${dayColor}$${todayCost.toFixed(2)}${GRAY}/$${DAILY_LIMIT}${RESET} ` +
         `${bar(dayPct, dayColor)} ${dayColor}${dayPct}%${RESET}`,
     );
   } else {
-    parts.push(`${GRAY}Cost loading...${RESET}`);
+    parts.push(`${GRAY}Daily loading...${RESET}`);
   }
 
   return parts.join(SEP);
