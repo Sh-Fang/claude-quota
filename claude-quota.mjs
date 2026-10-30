@@ -36,6 +36,8 @@ const YELLOW = `${ESC}38;5;221m`;
 const RED = `${ESC}38;5;203m`;
 const GRAY = `${ESC}38;5;245m`;
 const BAR_EMPTY_BG = `${ESC}48;5;238m`;
+// Index = eighths of a cell to fill
+const PARTIAL_BLOCKS = ['', '▏', '▎', '▍', '▌', '▋', '▊', '▉'];
 const SEP = `  ${GRAY}|${RESET}  `;
 
 function readJson(file) {
@@ -126,11 +128,21 @@ function pctColor(pct) {
 
 function bar(pct, color) {
   const clamped = Math.max(0, Math.min(100, pct));
-  let filled = Math.floor((clamped * BAR_WIDTH) / 100);
-  if (filled === 0 && clamped > 0) filled = 1;
+  // Measure progress in eighths of a cell so one cell no longer rounds away 10%
+  const eighths = Math.round((clamped * BAR_WIDTH * 8) / 100);
+  const filled = Math.floor(eighths / 8);
+  const remainder = eighths % 8;
   // Filled cells use the foreground color code as background, empty cells use gray background
   const fillBg = color.replace('38;5;', '48;5;');
-  return `${fillBg}${' '.repeat(filled)}${BAR_EMPTY_BG}${' '.repeat(BAR_WIDTH - filled)}${RESET}`;
+  let out = `${fillBg}${' '.repeat(filled)}${RESET}${BAR_EMPTY_BG}`;
+  let empty = BAR_WIDTH - filled;
+  if (remainder > 0 && empty > 0) {
+    // Draw the leftover fraction as a partial block on the empty background
+    out += `${color}${PARTIAL_BLOCKS[remainder]}`;
+    empty -= 1;
+  } else {
+  }
+  return `${out}${RESET}${BAR_EMPTY_BG}${' '.repeat(empty)}${RESET}`;
 }
 
 function readStdin() {
