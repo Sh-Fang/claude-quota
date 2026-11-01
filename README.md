@@ -3,11 +3,11 @@
 A cross-platform status line script for Claude Code (Windows / macOS / Linux).
 
 ```
-Context ██████     69%  |  Opus 5.5 (1M context)  |  Daily $142.07/$400 ███        35%
+Context ██████     69%  |  Opus 5.5 (1M context) · medium  |  Daily $142.07/$400 ███        35%
 ```
 
 - **Context**: context window usage
-- **Model**: current model name
+- **Model**: current model name and effort level (shown when the model supports effort)
 - **Daily**: today's cost from the gateway `/v1/usage`, against a daily limit
 
 Bars are green below 60%, yellow from 60% to 84%, red from 85%.

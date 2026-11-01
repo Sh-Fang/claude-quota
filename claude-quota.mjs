@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // claude-quota.mjs
-// Claude Code status line: context usage / model / daily cost
+// Claude Code status line: context usage / model and effort / daily cost
 // Cross-platform (Windows / macOS / Linux), Node 18+, no dependencies
 
 import fs from 'node:fs';
@@ -197,7 +197,10 @@ function render(input) {
   parts.push(`${GRAY}Context${RESET} ${bar(ctxPct, ctxColor)} ${ctxColor}${ctxPct}%${RESET}`);
 
   const model = input?.model?.display_name;
-  if (model) parts.push(`${CYAN}${BOLD}${model}${RESET}`);
+  const effort = input?.effort?.level;
+  if (model) {
+    parts.push(`${CYAN}${BOLD}${model}${RESET}` + (effort ? ` ${GRAY}·${RESET} ${CYAN}${effort}${RESET}` : ''));
+  }
 
   const cache = readJson(CACHE_FILE);
   const todayCost = Number(cache?.usage?.today?.cost);
