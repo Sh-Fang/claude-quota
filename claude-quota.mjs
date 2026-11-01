@@ -194,7 +194,7 @@ function render(input) {
 
   const ctxPct = Math.floor(Number(input?.context_window?.used_percentage) || 0);
   const ctxColor = pctColor(ctxPct);
-  parts.push(`${GRAY}Context${RESET} ${bar(ctxPct, ctxColor)} ${ctxColor}${ctxPct}%${RESET}`);
+  parts.push(`${GRAY}Ctx${RESET} ${bar(ctxPct, ctxColor)} ${ctxColor}${ctxPct}%${RESET}`);
 
   const model = input?.model?.display_name;
   const effort = input?.effort?.level;
@@ -208,11 +208,11 @@ function render(input) {
     const dayPct = Math.floor((todayCost * 100) / DAILY_LIMIT);
     const dayColor = pctColor(dayPct);
     parts.push(
-      `${GRAY}Daily${RESET} ${dayColor}$${todayCost.toFixed(2)}${GRAY}/$${DAILY_LIMIT}${RESET} ` +
+      `${dayColor}$${todayCost.toFixed(2)}${GRAY}/$${DAILY_LIMIT}${RESET} ` +
         `${bar(dayPct, dayColor)} ${dayColor}${dayPct}%${RESET}`,
     );
   } else {
-    parts.push(`${GRAY}Daily loading...${RESET}`);
+    parts.push(`${GRAY}loading...${RESET}`);
   }
 
   return parts.join(SEP);
